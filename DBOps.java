@@ -29,9 +29,9 @@ public class DBOps
         {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
             Properties props = new Properties();
-            props.put("user", "blackjack");
-            props.put("password", "blackjack");
-            conn = DriverManager.getConnection("jdbc:derby:BLACKJACK;create=true", props);
+            props.put("user", "kiwiIsland");
+            props.put("password", "kiwiIsland");
+            conn = DriverManager.getConnection("jdbc:derby:KIWIISLAND;create=true", props);
             conn.setAutoCommit(false);
             Statement stat = conn.createStatement();
             stat.execute("create table users(id integer not null generated always as identity (start with 1, increment by 1) primary key,username varchar(256) not null,password varchar(256) not null)");
