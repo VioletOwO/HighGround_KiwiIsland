@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package nz.ac.aut.ense701.gui;
 
 import javax.swing.ImageIcon;
@@ -25,6 +30,7 @@ public class LoginPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
         userLabel = new javax.swing.JLabel();
         userNameTextField = new javax.swing.JFormattedTextField();
         passwordLabel = new javax.swing.JLabel();
@@ -56,6 +62,9 @@ public class LoginPage extends javax.swing.JFrame {
 
         loginButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/loginButton.png"))); // NOI18N
         loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 loginButtonMouseEntered(evt);
             }
@@ -136,6 +145,7 @@ public class LoginPage extends javax.swing.JFrame {
                 gui.setVisible(true);
             }
         });
+        this.setVisible(false);
     }                                                
 
     private void registerButtonMouseClicked(java.awt.event.MouseEvent evt) {                                            
@@ -167,6 +177,7 @@ public class LoginPage extends javax.swing.JFrame {
                                 gui.setVisible(true);
                             }
                         });
+                        this.setVisible(false);
                     }
                     else
                     {
@@ -176,6 +187,20 @@ public class LoginPage extends javax.swing.JFrame {
         
     }                                           
 
+    private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {                                         
+        final Game game = new Game();
+        final KiwiCountUI  gui  = new KiwiCountUI(game);
+        java.awt.EventQueue.invokeLater(new Runnable() 
+        {
+            @Override
+            public void run() 
+            {
+                gui.setVisible(true);
+            }
+        });
+        this.setVisible(false);
+    }                                        
+
       
     /**
      * @param args the command line arguments
@@ -183,6 +208,7 @@ public class LoginPage extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify                     
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel loginButton;
     private javax.swing.JLabel loginPageBackground;
     private javax.swing.JPasswordField passwordField;
