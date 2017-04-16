@@ -39,6 +39,26 @@ public class UserTest extends junit.framework.TestCase
     {
         assertEquals("Kaiyuan", user.getPassword());
     }
+    @Test
+    public void testCheckUsername()
+    {
+        assertEquals(1, user.getID());
+    }
+    @Test
+    public void testIsDatabaseEmpty()
+    {
+        assertEquals(1, user.getID());
+    }
+    @Test
+    public void testHasUser()
+    {
+        assertEquals(1, user.getID());
+    }
+    @Test
+    public void testAddUser()
+    {
+        assertEquals(1, user.getID());
+    }
     
     
 }
