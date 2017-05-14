@@ -1,7 +1,12 @@
 package nz.ac.aut.ense701.gui;
 
+import com.sun.glass.events.KeyEvent;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameEventListener;
@@ -166,6 +171,17 @@ public class KiwiCountUI
         listObjects = new javax.swing.JList();
         btnCollect = new javax.swing.JButton();
         btnCount = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mainMenu = new javax.swing.JMenu();
+        pauseMenuItem = new javax.swing.JMenuItem();
+        resumeMenuItem = new javax.swing.JMenuItem();
+        restartMenuItem = new javax.swing.JMenuItem();
+        newGameMenuItem = new javax.swing.JMenuItem();
+        levelMenuItem = new javax.swing.JMenuItem();
+        backMenuItem = new javax.swing.JMenuItem();
+        tutorialMenu = new javax.swing.JMenu();
+        rankMenu = new javax.swing.JMenu();
+        exitMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kiwi Count");
@@ -181,7 +197,7 @@ public class KiwiCountUI
         );
         pnlIslandLayout.setVerticalGroup(
             pnlIslandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 618, Short.MAX_VALUE)
+            .addGap(0, 597, Short.MAX_VALUE)
         );
 
         pnlContent.add(pnlIsland, java.awt.BorderLayout.CENTER);
@@ -524,6 +540,65 @@ public class KiwiCountUI
 
         getContentPane().add(pnlContent, java.awt.BorderLayout.CENTER);
 
+        mainMenu.setText("Main");
+
+        pauseMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SPACE, 0));
+        pauseMenuItem.setText("Pause");
+        pauseMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pauseMenuItemActionPerformed(evt);
+            }
+        });
+        mainMenu.add(pauseMenuItem);
+
+        resumeMenuItem.setText("Resume");
+        mainMenu.add(resumeMenuItem);
+
+        restartMenuItem.setText("Restart");
+        mainMenu.add(restartMenuItem);
+
+        newGameMenuItem.setText("New Game");
+        mainMenu.add(newGameMenuItem);
+
+        levelMenuItem.setText("Level");
+        levelMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                levelMenuItemActionPerformed(evt);
+            }
+        });
+        mainMenu.add(levelMenuItem);
+
+        backMenuItem.setText("Back To Title ");
+        backMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backMenuItemActionPerformed(evt);
+            }
+        });
+        mainMenu.add(backMenuItem);
+
+        jMenuBar1.add(mainMenu);
+
+        tutorialMenu.setText("Tutorial");
+        tutorialMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tutorialMenuMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(tutorialMenu);
+
+        rankMenu.setText("Rank");
+        jMenuBar1.add(rankMenu);
+
+        exitMenu.setText("Exit");
+        exitMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitMenuMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(exitMenu);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -579,6 +654,41 @@ public class KiwiCountUI
     private void btnCountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCountActionPerformed
         game.countKiwi();
     }//GEN-LAST:event_btnCountActionPerformed
+
+    private void tutorialMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tutorialMenuMouseClicked
+        TutorialPage tp = new TutorialPage();
+                tp.setVisible(true);
+                tp.setSize(400,520);
+                tp.setLocationRelativeTo(null);
+                tp.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_tutorialMenuMouseClicked
+
+    private void exitMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMenuMouseClicked
+        ExitComfirmPage ecp = new ExitComfirmPage();
+                ecp.setVisible(true);
+                ecp.setSize(400,300);
+                ecp.setLocationRelativeTo(null);
+                ecp.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_exitMenuMouseClicked
+
+    private void pauseMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pauseMenuItemActionPerformed
+
+    private void levelMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_levelMenuItemActionPerformed
+        LevelPage Lvp = new LevelPage();
+            Lvp.setVisible(true);
+            Lvp.setSize(400,326);
+            Lvp.setLocationRelativeTo(null);
+            Lvp.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_levelMenuItemActionPerformed
+
+    private void backMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backMenuItemActionPerformed
+        this.dispose();
+        TitlePage tp = new TitlePage();
+            tp.setVisible(true);
+            tp.setLocationRelativeTo(null);
+    }//GEN-LAST:event_backMenuItemActionPerformed
     
     /**
      * Creates and initialises the island grid.
@@ -603,6 +713,7 @@ public class KiwiCountUI
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem backMenuItem;
     private javax.swing.JButton btnCollect;
     private javax.swing.JButton btnCount;
     private javax.swing.JButton btnDrop;
@@ -611,14 +722,24 @@ public class KiwiCountUI
     private javax.swing.JButton btnMoveSouth;
     private javax.swing.JButton btnMoveWest;
     private javax.swing.JButton btnUse;
+    private javax.swing.JMenu exitMenu;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel lblKiwisCounted;
     private javax.swing.JLabel lblPredators;
+    private javax.swing.JMenuItem levelMenuItem;
     private javax.swing.JList listInventory;
     private javax.swing.JList listObjects;
+    private javax.swing.JMenu mainMenu;
+    private javax.swing.JMenuItem newGameMenuItem;
+    private javax.swing.JMenuItem pauseMenuItem;
     private javax.swing.JPanel pnlIsland;
     private javax.swing.JProgressBar progBackpackSize;
     private javax.swing.JProgressBar progBackpackWeight;
     private javax.swing.JProgressBar progPlayerStamina;
+    private javax.swing.JMenu rankMenu;
+    private javax.swing.JMenuItem restartMenuItem;
+    private javax.swing.JMenuItem resumeMenuItem;
+    private javax.swing.JMenu tutorialMenu;
     private javax.swing.JLabel txtKiwisCounted;
     private javax.swing.JLabel txtPlayerName;
     private javax.swing.JLabel txtPredatorsLeft;
