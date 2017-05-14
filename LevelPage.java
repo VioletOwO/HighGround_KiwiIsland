@@ -5,21 +5,20 @@
  */
 package nz.ac.aut.ense701.gui;
 
-import java.awt.Frame;
+import java.util.Random;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import nz.ac.aut.ense701.gameModel.Game;
 
 /**
  *
  * @author Administrator
  */
-public class TitlePage extends javax.swing.JFrame {
+public class LevelPage extends javax.swing.JFrame {
 
     /**
-     * Creates new form titlePage
+     * Creates new form LevelPage
      */
-    public TitlePage() {
+    public LevelPage() {
         initComponents();
     }
 
@@ -32,120 +31,115 @@ public class TitlePage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        exitButton = new javax.swing.JLabel();
-        playAsVisitorTitlePageButton = new javax.swing.JLabel();
-        loginTitlePageButton = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        backLevelPageButton = new javax.swing.JLabel();
+        easyButton = new javax.swing.JLabel();
+        normalButton = new javax.swing.JLabel();
+        hardButton = new javax.swing.JLabel();
+        pageBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(400, 502));
-        setResizable(false);
         getContentPane().setLayout(null);
 
-        exitButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/exitButton.png"))); // NOI18N
-        exitButton.setText("jLabel4");
-        exitButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        backLevelPageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/backButton.png"))); // NOI18N
+        backLevelPageButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                exitButtonMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                exitButtonMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                exitButtonMouseExited(evt);
+                backLevelPageButtonMouseClicked(evt);
             }
         });
-        getContentPane().add(exitButton);
-        exitButton.setBounds(130, 440, 150, 30);
+        getContentPane().add(backLevelPageButton);
+        backLevelPageButton.setBounds(140, 210, 130, 50);
 
-        playAsVisitorTitlePageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/playAsVisitorTitlePageButton.png"))); // NOI18N
-        playAsVisitorTitlePageButton.setText("jLabel3");
-        playAsVisitorTitlePageButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        easyButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/easyButton.png"))); // NOI18N
+        easyButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                playAsVisitorTitlePageButtonMouseClicked(evt);
+                easyButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                playAsVisitorTitlePageButtonMouseEntered(evt);
+                easyButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                playAsVisitorTitlePageButtonMouseExited(evt);
+                easyButtonMouseExited(evt);
             }
         });
-        getContentPane().add(playAsVisitorTitlePageButton);
-        playAsVisitorTitlePageButton.setBounds(130, 390, 150, 30);
+        getContentPane().add(easyButton);
+        easyButton.setBounds(140, 30, 130, 50);
 
-        loginTitlePageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/loginTitlePageButton.png"))); // NOI18N
-        loginTitlePageButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        normalButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/normalButton.png"))); // NOI18N
+        normalButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                loginTitlePageButtonMouseClicked(evt);
+                normalButtonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                loginTitlePageButtonMouseEntered(evt);
+                normalButtonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                loginTitlePageButtonMouseExited(evt);
+                normalButtonMouseExited(evt);
             }
         });
-        getContentPane().add(loginTitlePageButton);
-        loginTitlePageButton.setBounds(130, 340, 150, 30);
+        getContentPane().add(normalButton);
+        normalButton.setBounds(140, 90, 130, 50);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/titlePageBackground.png"))); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 400, 500);
+        hardButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/hardButton.png"))); // NOI18N
+        hardButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                hardButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                hardButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                hardButtonMouseExited(evt);
+            }
+        });
+        getContentPane().add(hardButton);
+        hardButton.setBounds(140, 150, 130, 50);
+
+        pageBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/windowBackground3.png"))); // NOI18N
+        pageBackground.setText("jLabel4");
+        getContentPane().add(pageBackground);
+        pageBackground.setBounds(0, 0, 400, 300);
 
         pack();
     }// </editor-fold>                        
 
-    private void loginTitlePageButtonMouseEntered(java.awt.event.MouseEvent evt) {                                                  
-        ImageIcon loginTitlePageIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/loginTitlePageButtonHover.png"));
-        loginTitlePageButton.setIcon(loginTitlePageIcon);
-    }                                                 
-
-    private void loginTitlePageButtonMouseExited(java.awt.event.MouseEvent evt) {                                                 
-        ImageIcon loginTitlePageIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/loginTitlePageButton.png"));
-        loginTitlePageButton.setIcon(loginTitlePageIcon);
-    }                                                
-
-    private void playAsVisitorTitlePageButtonMouseEntered(java.awt.event.MouseEvent evt) {                                                          
-       ImageIcon playAsVisitorTitlePageIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/playAsVisitorTitlePageButtonHover.png"));
-        playAsVisitorTitlePageButton.setIcon(playAsVisitorTitlePageIcon);
-    }                                                         
-
-    private void playAsVisitorTitlePageButtonMouseExited(java.awt.event.MouseEvent evt) {                                                         
-        ImageIcon playAsVisitorTitlePageIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/playAsVisitorTitlePageButton.png"));
-        playAsVisitorTitlePageButton.setIcon(playAsVisitorTitlePageIcon);
-    }                                                        
-
-    private void exitButtonMouseEntered(java.awt.event.MouseEvent evt) {                                        
-        ImageIcon exitIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/exitButtonHover.png"));
-        exitButton.setIcon(exitIcon);
+    private void easyButtonMouseEntered(java.awt.event.MouseEvent evt) {                                        
+        ImageIcon easyIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/easyButtonHover.png"));
+        easyButton.setIcon(easyIcon);
     }                                       
 
-    private void exitButtonMouseExited(java.awt.event.MouseEvent evt) {                                       
-        ImageIcon exitIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/exitButton.png"));
-        exitButton.setIcon(exitIcon);
+    private void easyButtonMouseExited(java.awt.event.MouseEvent evt) {                                       
+         ImageIcon easyIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/easyButton.png"));
+        easyButton.setIcon(easyIcon);
     }                                      
 
-    private void loginTitlePageButtonMouseClicked(java.awt.event.MouseEvent evt) {                                                  
-        LoginPage lg = new LoginPage();
-                lg.setVisible(true);
-                lg.setSize(400,326);
-                lg.setLocationRelativeTo(null);
-                lg.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setVisible(false);
-    }                                                 
+    private void normalButtonMouseEntered(java.awt.event.MouseEvent evt) {                                          
+        ImageIcon normalIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/normalButtonHover.png"));
+        normalButton.setIcon(normalIcon);
+    }                                         
 
-    private void exitButtonMouseClicked(java.awt.event.MouseEvent evt) {                                        
-         ExitComfirmPage ecp = new ExitComfirmPage();
-                ecp.setVisible(true);
-                ecp.setSize(400,300);
-                ecp.setLocationRelativeTo(null);
-                ecp.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        
+    private void normalButtonMouseExited(java.awt.event.MouseEvent evt) {                                         
+        ImageIcon normalIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/normalButton.png"));
+        normalButton.setIcon(normalIcon);
+    }                                        
+
+    private void hardButtonMouseEntered(java.awt.event.MouseEvent evt) {                                        
+        ImageIcon hardIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/hardButtonHover.png"));
+        hardButton.setIcon(hardIcon);
     }                                       
 
-    private void playAsVisitorTitlePageButtonMouseClicked(java.awt.event.MouseEvent evt) {                                                          
-        String difficulty = "";
+    private void hardButtonMouseExited(java.awt.event.MouseEvent evt) {                                       
+        ImageIcon hardIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/hardButton.png"));
+        hardButton.setIcon(hardIcon);
+    }                                      
+
+    private void backLevelPageButtonMouseClicked(java.awt.event.MouseEvent evt) {                                                 
+        this.dispose();
+    }                                                
+
+    private void easyButtonMouseClicked(java.awt.event.MouseEvent evt) {                                        
+        Random rn = new Random();
+        int num = rn.nextInt(3) + 1;
+        String difficulty = "Easy" + num;
         final Game game = new Game(difficulty);
         final KiwiCountUI  gui  = new KiwiCountUI(game);
         java.awt.EventQueue.invokeLater(new Runnable() 
@@ -156,8 +150,40 @@ public class TitlePage extends javax.swing.JFrame {
                 gui.setVisible(true);
             }
         });
-        this.setVisible(false);        
-    }                                                         
+        this.setVisible(false);
+    }                                       
+
+    private void normalButtonMouseClicked(java.awt.event.MouseEvent evt) {                                          
+        Random rn = new Random();
+        int num = rn.nextInt(3) + 1;
+        String difficulty = "Normal" + num;
+        final Game game = new Game(difficulty);
+        final KiwiCountUI  gui  = new KiwiCountUI(game);
+        java.awt.EventQueue.invokeLater(new Runnable() 
+        {
+            @Override
+            public void run() 
+            {
+                gui.setVisible(true);
+            }
+        });
+        this.setVisible(false);
+    }                                         
+
+    private void hardButtonMouseClicked(java.awt.event.MouseEvent evt) {                                        
+        String difficulty = "Hard1";
+        final Game game = new Game(difficulty);
+        final KiwiCountUI  gui  = new KiwiCountUI(game);
+        java.awt.EventQueue.invokeLater(new Runnable() 
+        {
+            @Override
+            public void run() 
+            {
+                gui.setVisible(true);
+            }
+        });
+        this.setVisible(false);
+    }                                       
 
     /**
      * @param args the command line arguments
@@ -176,33 +202,29 @@ public class TitlePage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TitlePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LevelPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TitlePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LevelPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TitlePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LevelPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TitlePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LevelPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TitlePage tp = new TitlePage(); 
-                tp.setLocationRelativeTo(null);
-                tp.setSize(400,510);
-                tp.setVisible(true);
-                 
+                new LevelPage().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify                     
-    private javax.swing.JLabel exitButton;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel loginTitlePageButton;
-    private javax.swing.JLabel playAsVisitorTitlePageButton;
+    private javax.swing.JLabel backLevelPageButton;
+    private javax.swing.JLabel easyButton;
+    private javax.swing.JLabel hardButton;
+    private javax.swing.JLabel normalButton;
+    private javax.swing.JLabel pageBackground;
     // End of variables declaration                   
 }
