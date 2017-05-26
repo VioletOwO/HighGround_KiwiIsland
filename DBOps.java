@@ -19,7 +19,7 @@ public class DBOps
     public static Connection conn;
     
     /**
-     * Initial the connection.
+     * Initial the database connection.
      *
      * @throws SQLException the SQL exception
      */
