@@ -1,13 +1,17 @@
 package nz.ac.aut.ense701.gui;
 
-import com.sun.glass.events.KeyEvent;
 import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
+import java.awt.event.KeyListener;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameEventListener;
 import nz.ac.aut.ense701.gameModel.GameState;
@@ -21,8 +25,8 @@ import nz.ac.aut.ense701.gameModel.MoveDirection;
  */
 
 public class KiwiCountUI 
-    extends javax.swing.JFrame 
-    implements GameEventListener
+    extends javax.swing.JFrame
+    implements GameEventListener, KeyListener
 {
 
     /**
@@ -37,6 +41,7 @@ public class KiwiCountUI
         initComponents();
         initIslandGrid();
         update();
+        this.addMusic();
     }
     
     /**
@@ -55,7 +60,7 @@ public class KiwiCountUI
                     this, 
                     game.getLoseMessage(), "Game over!",
                     JOptionPane.INFORMATION_MESSAGE);
-            game.createNewGame();
+            //game.createNewGame();
         }
         else if ( game.getState() == GameState.WON )
         {
@@ -63,7 +68,22 @@ public class KiwiCountUI
                     this, 
                     game.getWinMessage(), "Well Done!",
                     JOptionPane.INFORMATION_MESSAGE);
-            game.createNewGame();
+            this.setVisible(false);
+            final ResultPage resultPage = new ResultPage();
+            resultPage.setInfo(this.game.getPlayer().getName(), this.game.countFinalMark());
+            resultPage.setVisible(true);
+            resultPage.setSize(400,326);
+            resultPage.setLocationRelativeTo(null);
+            resultPage.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            java.awt.EventQueue.invokeLater(new Runnable() 
+            {
+                @Override
+                public void run() 
+                {
+                    resultPage.setVisible(true);
+                }
+            });
+            //game.createNewGame();
         }
         else if (game.messageForPlayer())
         {
@@ -77,6 +97,10 @@ public class KiwiCountUI
      private void setAsGameListener()
     {
        game.addGameEventListener(this); 
+    }
+     
+    public void updateTimer(){
+        timeLeft.setText(game.getMyTimerTask().getShowingTime());
     }
      
     /**
@@ -104,8 +128,11 @@ public class KiwiCountUI
         progBackpackSize.setMaximum(playerValues[Game.MAXSIZE_INDEX]);
         progBackpackSize.setValue(playerValues[Game.SIZE_INDEX]);
         
+        //update timer
+        //timeLeft.setText(game.getMyTimerTask().getShowingTime());
+        
         //Update Kiwi and Predator information
-        txtKiwisCounted.setText(Integer.toString(game.getKiwiCount()) );
+        txtKiwisCounted.setText(Integer.toString(game.getKiwiCount()));
         txtPredatorsLeft.setText(Integer.toString(game.getPredatorsRemaining()));
         
         // update inventory list
@@ -127,6 +154,11 @@ public class KiwiCountUI
         btnMoveEast.setEnabled( game.isPlayerMovePossible(MoveDirection.EAST));
         btnMoveSouth.setEnabled(game.isPlayerMovePossible(MoveDirection.SOUTH));
         btnMoveWest.setEnabled( game.isPlayerMovePossible(MoveDirection.WEST));
+        this.requestFocusInWindow();
+        
+        
+        
+        
     }
     
     /** This method is called from within the constructor to
@@ -142,6 +174,10 @@ public class KiwiCountUI
         javax.swing.JPanel pnlContent = new javax.swing.JPanel();
         pnlIsland = new javax.swing.JPanel();
         javax.swing.JPanel pnlControls = new javax.swing.JPanel();
+        javax.swing.JPanel pnlTimer = new javax.swing.JPanel();
+        pnlTimerShow = new javax.swing.JPanel();
+        timeLeft = new javax.swing.JLabel();
+        lblTimer = new javax.swing.JLabel();
         javax.swing.JPanel pnlPlayer = new javax.swing.JPanel();
         javax.swing.JPanel pnlPlayerData = new javax.swing.JPanel();
         javax.swing.JLabel lblPlayerName = new javax.swing.JLabel();
@@ -176,7 +212,6 @@ public class KiwiCountUI
         pauseMenuItem = new javax.swing.JMenuItem();
         resumeMenuItem = new javax.swing.JMenuItem();
         restartMenuItem = new javax.swing.JMenuItem();
-        newGameMenuItem = new javax.swing.JMenuItem();
         levelMenuItem = new javax.swing.JMenuItem();
         backMenuItem = new javax.swing.JMenuItem();
         tutorialMenu = new javax.swing.JMenu();
@@ -203,6 +238,29 @@ public class KiwiCountUI
         pnlContent.add(pnlIsland, java.awt.BorderLayout.CENTER);
 
         pnlControls.setLayout(new java.awt.GridBagLayout());
+
+        pnlTimer.setBorder(javax.swing.BorderFactory.createTitledBorder("Timer"));
+        pnlTimer.setMinimumSize(new java.awt.Dimension(263, 100));
+        pnlTimer.setPreferredSize(new java.awt.Dimension(263, 100));
+        pnlTimer.setLayout(new java.awt.BorderLayout());
+
+        pnlTimerShow.setMinimumSize(new java.awt.Dimension(263, 70));
+        pnlTimerShow.setPreferredSize(new java.awt.Dimension(263, 70));
+        pnlTimerShow.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pnlTimerShow.add(timeLeft, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 160, 30));
+
+        lblTimer.setText("Timer:");
+        pnlTimerShow.add(lblTimer, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 40, 30));
+
+        pnlTimer.add(pnlTimerShow, java.awt.BorderLayout.PAGE_END);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        pnlControls.add(pnlTimer, gridBagConstraints);
 
         pnlPlayer.setBorder(javax.swing.BorderFactory.createTitledBorder("Player"));
         pnlPlayer.setLayout(new java.awt.BorderLayout());
@@ -313,7 +371,7 @@ public class KiwiCountUI
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.5;
@@ -322,7 +380,7 @@ public class KiwiCountUI
         pnlMovement.setBorder(javax.swing.BorderFactory.createTitledBorder("Movement"));
         pnlMovement.setLayout(new java.awt.GridBagLayout());
 
-        btnMoveNorth.setText("N");
+        btnMoveNorth.setText("W");
         btnMoveNorth.setFocusable(false);
         btnMoveNorth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -354,7 +412,7 @@ public class KiwiCountUI
         gridBagConstraints.weighty = 1.0;
         pnlMovement.add(btnMoveSouth, gridBagConstraints);
 
-        btnMoveEast.setText("E");
+        btnMoveEast.setText("D");
         btnMoveEast.setFocusable(false);
         btnMoveEast.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -370,7 +428,7 @@ public class KiwiCountUI
         gridBagConstraints.weighty = 1.0;
         pnlMovement.add(btnMoveEast, gridBagConstraints);
 
-        btnMoveWest.setText("W");
+        btnMoveWest.setText("A");
         btnMoveWest.setFocusable(false);
         btnMoveWest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -388,7 +446,7 @@ public class KiwiCountUI
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 0.5;
@@ -455,7 +513,7 @@ public class KiwiCountUI
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
@@ -551,14 +609,22 @@ public class KiwiCountUI
         });
         mainMenu.add(pauseMenuItem);
 
+        resumeMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SPACE, 0));
         resumeMenuItem.setText("Resume");
+        resumeMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resumeMenuItemActionPerformed(evt);
+            }
+        });
         mainMenu.add(resumeMenuItem);
 
         restartMenuItem.setText("Restart");
+        restartMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                restartMenuItemActionPerformed(evt);
+            }
+        });
         mainMenu.add(restartMenuItem);
-
-        newGameMenuItem.setText("New Game");
-        mainMenu.add(newGameMenuItem);
 
         levelMenuItem.setText("Level");
         levelMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -587,6 +653,11 @@ public class KiwiCountUI
         jMenuBar1.add(tutorialMenu);
 
         rankMenu.setText("Rank");
+        rankMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rankMenuMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(rankMenu);
 
         exitMenu.setText("Exit");
@@ -673,6 +744,8 @@ public class KiwiCountUI
 
     private void pauseMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseMenuItemActionPerformed
         // TODO add your handling code here:
+        this.game.gamePause();
+        this.setAllButtonUnable();
     }//GEN-LAST:event_pauseMenuItemActionPerformed
 
     private void levelMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_levelMenuItemActionPerformed
@@ -689,6 +762,132 @@ public class KiwiCountUI
             tp.setVisible(true);
             tp.setLocationRelativeTo(null);
     }//GEN-LAST:event_backMenuItemActionPerformed
+
+    private void resumeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resumeMenuItemActionPerformed
+        // TODO add your handling code here:
+        this.game.gameResume();
+        btnMoveNorth.setEnabled(game.isPlayerMovePossible(MoveDirection.NORTH));
+        btnMoveEast.setEnabled( game.isPlayerMovePossible(MoveDirection.EAST));
+        btnMoveSouth.setEnabled(game.isPlayerMovePossible(MoveDirection.SOUTH));
+        btnMoveWest.setEnabled( game.isPlayerMovePossible(MoveDirection.WEST));
+    }//GEN-LAST:event_resumeMenuItemActionPerformed
+
+    private void restartMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartMenuItemActionPerformed
+        // TODO add your handling code here:
+        final Game game = new Game(this.game.getDifficulty());
+        final KiwiCountUI  gui  = new KiwiCountUI(game);
+        java.awt.EventQueue.invokeLater(new Runnable() 
+        {
+            @Override
+            public void run() 
+            {
+                gui.setVisible(true);
+            }
+        });
+        this.setupTimer(game, gui);
+        this.setVisible(false);
+    }//GEN-LAST:event_restartMenuItemActionPerformed
+
+    private void rankMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rankMenuMouseClicked
+        RankPage tp = new RankPage();
+                tp.setVisible(true);
+                tp.setSize(400,520);
+                tp.setLocationRelativeTo(null);
+                tp.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_rankMenuMouseClicked
+    
+    @Override
+    public void keyTyped(java.awt.event.KeyEvent evt)
+    {
+    }
+    @Override
+    public void keyPressed(java.awt.event.KeyEvent evt) 
+    {
+        
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_A)
+        {
+            if(this.btnMoveWest.isEnabled()){
+                game.playerMove(MoveDirection.WEST);
+            }
+        }
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_D)
+        {
+            if(this.btnMoveEast.isEnabled()){
+                game.playerMove(MoveDirection.EAST);    
+            }
+        }
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_W)
+        {
+            if(this.btnMoveNorth.isEnabled()){
+                game.playerMove(MoveDirection.NORTH);
+            }
+        }
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_S)
+        {
+            if(this.btnMoveSouth.isEnabled()){
+                game.playerMove(MoveDirection.SOUTH);
+            }
+        }
+        if(evt.getKeyCode() == java.awt.event.KeyEvent.VK_SPACE){
+            if(game.getMyTimerTask().isPause()){
+                game.gameResume();
+            }else{
+                game.gamePause();
+            }
+        }
+    }
+    @Override
+    public void keyReleased(java.awt.event.KeyEvent e) { }
+    @Override
+    public void addNotify() {
+        this.addKeyListener(this);
+        super.addNotify();
+        requestFocus();
+        setFocusable(true);
+    }
+    public void setupTimer(final Game game, final KiwiCountUI gui){
+        Thread t = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    Timer timer = new Timer(true);
+                    game.getMyTimerTask().setLable(gui.getTimeLeftLable());
+                    game.getMyTimerTask().setGameState(game.getState());
+                    timer.scheduleAtFixedRate(game.getMyTimerTask(), 0, 1000);
+                    Thread.sleep(60 * 10 * 1000);
+                    if(game.getMyTimerTask().getTime() == 0 || !game.getState().equals(GameState.PLAYING)){
+                        timer.cancel();
+                    }
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(TitlePage.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        t.start();
+    }
+    
+    public void addMusic(){
+        /*JFXPanel j = new JFXPanel();
+        String bip = "Shape.wav";
+        Media hit = new Media(new File(bip).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+        mediaPlayer.play();*/
+        Thread t = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    BufferedInputStream buffer = new BufferedInputStream(new FileInputStream("Shape.wav"));
+                    Player player = new Player(buffer);
+                    player.play();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(KiwiCountUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (JavaLayerException ex) {
+                    Logger.getLogger(KiwiCountUI.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+            }
+        });
+        t.start();
+    }
     
     /**
      * Creates and initialises the island grid.
@@ -712,6 +911,17 @@ public class KiwiCountUI
         }
     }
     
+    public javax.swing.JLabel getTimeLeftLable(){
+        return this.timeLeft;
+    }
+    
+    private void setAllButtonUnable(){
+        this.btnMoveEast.setEnabled(false);
+        this.btnMoveNorth.setEnabled(false);
+        this.btnMoveSouth.setEnabled(false);
+        this.btnMoveWest.setEnabled(false);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem backMenuItem;
     private javax.swing.JButton btnCollect;
@@ -726,19 +936,21 @@ public class KiwiCountUI
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel lblKiwisCounted;
     private javax.swing.JLabel lblPredators;
+    private javax.swing.JLabel lblTimer;
     private javax.swing.JMenuItem levelMenuItem;
     private javax.swing.JList listInventory;
     private javax.swing.JList listObjects;
     private javax.swing.JMenu mainMenu;
-    private javax.swing.JMenuItem newGameMenuItem;
     private javax.swing.JMenuItem pauseMenuItem;
     private javax.swing.JPanel pnlIsland;
+    private javax.swing.JPanel pnlTimerShow;
     private javax.swing.JProgressBar progBackpackSize;
     private javax.swing.JProgressBar progBackpackWeight;
     private javax.swing.JProgressBar progPlayerStamina;
     private javax.swing.JMenu rankMenu;
     private javax.swing.JMenuItem restartMenuItem;
     private javax.swing.JMenuItem resumeMenuItem;
+    private javax.swing.JLabel timeLeft;
     private javax.swing.JMenu tutorialMenu;
     private javax.swing.JLabel txtKiwisCounted;
     private javax.swing.JLabel txtPlayerName;
@@ -746,4 +958,6 @@ public class KiwiCountUI
     // End of variables declaration//GEN-END:variables
 
     private Game game;
+    
+    //private MyTimerTask myTimerTask;
 }

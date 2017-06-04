@@ -5,6 +5,11 @@
  */
 package nz.ac.aut.ense701.gui;
 
+import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import nz.ac.aut.ense701.gameModel.Record;
 import javax.swing.ImageIcon;
 
 /**
@@ -18,6 +23,26 @@ public class RankPage extends javax.swing.JFrame {
      */
     public RankPage() {
         initComponents();
+        this.setTableContentCenter();
+        this.addTableItems();
+    }
+    
+    private void setTableContentCenter(){
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        this.jTable1.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+        this.jTable1.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+        this.jTable1.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
+    }
+    
+    public void addTableItems(){
+        ArrayList<Record> records = Record.getTopTenPlayer();
+        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
+        int num = 0;
+        for(Record r: records){
+            model.insertRow(num, new Object[]{num + 1, r.getName(), r.getMark()});
+            num++;
+        }
     }
 
     /**
@@ -30,27 +55,9 @@ public class RankPage extends javax.swing.JFrame {
     private void initComponents() {
 
         rankPageTitleLabel = new javax.swing.JLabel();
-        numberOne = new javax.swing.JLabel();
-        listDetial1 = new javax.swing.JLabel();
-        numberTwo = new javax.swing.JLabel();
-        listDetial2 = new javax.swing.JLabel();
-        numberThree = new javax.swing.JLabel();
-        listDetial3 = new javax.swing.JLabel();
-        numberFour = new javax.swing.JLabel();
-        numberFive = new javax.swing.JLabel();
-        numberSix = new javax.swing.JLabel();
-        numberSeven = new javax.swing.JLabel();
-        numberEight = new javax.swing.JLabel();
-        numberNine = new javax.swing.JLabel();
-        numberTen = new javax.swing.JLabel();
         backButtonRankPage = new javax.swing.JLabel();
-        listDetial4 = new javax.swing.JLabel();
-        listDetial5 = new javax.swing.JLabel();
-        listDetial6 = new javax.swing.JLabel();
-        listDetial7 = new javax.swing.JLabel();
-        listDetial8 = new javax.swing.JLabel();
-        listDetial9 = new javax.swing.JLabel();
-        listDetial10 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,60 +69,11 @@ public class RankPage extends javax.swing.JFrame {
         getContentPane().add(rankPageTitleLabel);
         rankPageTitleLabel.setBounds(113, 6, 132, 29);
 
-        numberOne.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/number1.png"))); // NOI18N
-        getContentPane().add(numberOne);
-        numberOne.setBounds(42, 46, 40, 40);
-
-        listDetial1.setText("jLabel1");
-        getContentPane().add(listDetial1);
-        listDetial1.setBounds(124, 46, 221, 40);
-
-        numberTwo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/number2.png"))); // NOI18N
-        getContentPane().add(numberTwo);
-        numberTwo.setBounds(42, 92, 40, 40);
-
-        listDetial2.setText("jLabel2");
-        getContentPane().add(listDetial2);
-        listDetial2.setBounds(124, 92, 221, 40);
-
-        numberThree.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/number3.png"))); // NOI18N
-        getContentPane().add(numberThree);
-        numberThree.setBounds(42, 138, 40, 40);
-
-        listDetial3.setText("jLabel3");
-        getContentPane().add(listDetial3);
-        listDetial3.setBounds(124, 138, 221, 40);
-
-        numberFour.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/number4.png"))); // NOI18N
-        getContentPane().add(numberFour);
-        numberFour.setBounds(42, 184, 40, 40);
-
-        numberFive.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/number5.png"))); // NOI18N
-        getContentPane().add(numberFive);
-        numberFive.setBounds(42, 230, 40, 40);
-
-        numberSix.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/number6.png"))); // NOI18N
-        getContentPane().add(numberSix);
-        numberSix.setBounds(42, 276, 40, 40);
-
-        numberSeven.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/number7.png"))); // NOI18N
-        getContentPane().add(numberSeven);
-        numberSeven.setBounds(42, 322, 40, 40);
-
-        numberEight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/number8.png"))); // NOI18N
-        getContentPane().add(numberEight);
-        numberEight.setBounds(42, 368, 40, 40);
-
-        numberNine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/number9.png"))); // NOI18N
-        getContentPane().add(numberNine);
-        numberNine.setBounds(42, 414, 40, 40);
-
-        numberTen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/number10.png"))); // NOI18N
-        getContentPane().add(numberTen);
-        numberTen.setBounds(42, 460, 40, 40);
-
         backButtonRankPage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/backButton.png"))); // NOI18N
         backButtonRankPage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backButtonRankPageMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 backButtonRankPageMouseEntered(evt);
             }
@@ -126,33 +84,28 @@ public class RankPage extends javax.swing.JFrame {
         getContentPane().add(backButtonRankPage);
         backButtonRankPage.setBounds(120, 510, 120, 46);
 
-        listDetial4.setText("jLabel4");
-        getContentPane().add(listDetial4);
-        listDetial4.setBounds(124, 184, 221, 40);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Rank", "Player Name", "Mark"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
-        listDetial5.setText("jLabel5");
-        getContentPane().add(listDetial5);
-        listDetial5.setBounds(124, 230, 221, 40);
-
-        listDetial6.setText("jLabel6");
-        getContentPane().add(listDetial6);
-        listDetial6.setBounds(124, 276, 221, 40);
-
-        listDetial7.setText("jLabel7");
-        getContentPane().add(listDetial7);
-        listDetial7.setBounds(124, 322, 221, 40);
-
-        listDetial8.setText("jLabel8");
-        getContentPane().add(listDetial8);
-        listDetial8.setBounds(124, 368, 221, 40);
-
-        listDetial9.setText("jLabel9");
-        getContentPane().add(listDetial9);
-        listDetial9.setBounds(124, 414, 221, 40);
-
-        listDetial10.setText("jLabel10");
-        getContentPane().add(listDetial10);
-        listDetial10.setBounds(124, 460, 221, 40);
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(40, 120, 290, 200);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/tutorialBackground.png"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -171,6 +124,10 @@ public class RankPage extends javax.swing.JFrame {
         ImageIcon backIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/backButton.png"));
         backButtonRankPage.setIcon(backIcon);
     }//GEN-LAST:event_backButtonRankPageMouseExited
+
+    private void backButtonRankPageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonRankPageMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_backButtonRankPageMouseClicked
 
     /**
      * @param args the command line arguments
@@ -206,30 +163,11 @@ public class RankPage extends javax.swing.JFrame {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backButtonRankPage;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel listDetial1;
-    private javax.swing.JLabel listDetial10;
-    private javax.swing.JLabel listDetial2;
-    private javax.swing.JLabel listDetial3;
-    private javax.swing.JLabel listDetial4;
-    private javax.swing.JLabel listDetial5;
-    private javax.swing.JLabel listDetial6;
-    private javax.swing.JLabel listDetial7;
-    private javax.swing.JLabel listDetial8;
-    private javax.swing.JLabel listDetial9;
-    private javax.swing.JLabel numberEight;
-    private javax.swing.JLabel numberFive;
-    private javax.swing.JLabel numberFour;
-    private javax.swing.JLabel numberNine;
-    private javax.swing.JLabel numberOne;
-    private javax.swing.JLabel numberSeven;
-    private javax.swing.JLabel numberSix;
-    private javax.swing.JLabel numberTen;
-    private javax.swing.JLabel numberThree;
-    private javax.swing.JLabel numberTwo;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel rankPageTitleLabel;
     // End of variables declaration//GEN-END:variables
 }
