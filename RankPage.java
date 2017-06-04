@@ -5,44 +5,22 @@
  */
 package nz.ac.aut.ense701.gui;
 
-import java.util.ArrayList;
-import javax.swing.JLabel;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import nz.ac.aut.ense701.gameModel.Record;
+import java.util.Arrays;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import nz.ac.aut.ense701.gameModel.User;
 
 /**
  *
  * @author Administrator
  */
-public class RankPage extends javax.swing.JFrame {
+public class RegisterPage extends javax.swing.JFrame {
 
     /**
-     * Creates new form RankPage
+     * Creates new form registerPage
      */
-    public RankPage() {
+    public RegisterPage() {
         initComponents();
-        this.setTableContentCenter();
-        this.addTableItems();
-    }
-    
-    private void setTableContentCenter(){
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-        this.jTable1.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
-        this.jTable1.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
-        this.jTable1.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
-    }
-    
-    public void addTableItems(){
-        ArrayList<Record> records = Record.getTopTenPlayer();
-        DefaultTableModel model = (DefaultTableModel) this.jTable1.getModel();
-        int num = 0;
-        for(Record r: records){
-            model.insertRow(num, new Object[]{num + 1, r.getName(), r.getMark()});
-            num++;
-        }
     }
 
     /**
@@ -54,80 +32,169 @@ public class RankPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
-        rankPageTitleLabel = new javax.swing.JLabel();
-        backButtonRankPage = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        userLabel = new javax.swing.JLabel();
+        userNameTextField = new javax.swing.JFormattedTextField();
+        passwordLabel = new javax.swing.JLabel();
+        passwordField = new javax.swing.JPasswordField();
+        confirmPasswordLabel = new javax.swing.JLabel();
+        confirmPasswordField = new javax.swing.JPasswordField();
+        playButton = new javax.swing.JLabel();
+        backReigisterPageButton = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        rankPageTitleLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        rankPageTitleLabel.setForeground(new java.awt.Color(153, 74, 2));
-        rankPageTitleLabel.setText("RANK LIST");
-        getContentPane().add(rankPageTitleLabel);
-        rankPageTitleLabel.setBounds(113, 6, 132, 29);
+        userLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        userLabel.setForeground(new java.awt.Color(153, 74, 2));
+        userLabel.setText("User Name: ");
+        userLabel.setToolTipText("");
+        getContentPane().add(userLabel);
+        userLabel.setBounds(50, 50, 90, 30);
+        getContentPane().add(userNameTextField);
+        userNameTextField.setBounds(180, 50, 160, 30);
 
-        backButtonRankPage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/backButton.png"))); // NOI18N
-        backButtonRankPage.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backButtonRankPageMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                backButtonRankPageMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                backButtonRankPageMouseExited(evt);
+        passwordLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        passwordLabel.setForeground(new java.awt.Color(153, 74, 2));
+        passwordLabel.setText("Password:");
+        getContentPane().add(passwordLabel);
+        passwordLabel.setBounds(60, 100, 80, 20);
+
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(backButtonRankPage);
-        backButtonRankPage.setBounds(120, 510, 120, 46);
+        getContentPane().add(passwordField);
+        passwordField.setBounds(180, 150, 160, 30);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Rank", "Player Name", "Mark"
+        confirmPasswordLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        confirmPasswordLabel.setForeground(new java.awt.Color(153, 74, 2));
+        confirmPasswordLabel.setText("Confirm Password:");
+        getContentPane().add(confirmPasswordLabel);
+        confirmPasswordLabel.setBounds(30, 150, 140, 20);
+
+        confirmPasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmPasswordFieldActionPerformed(evt);
             }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        });
+        getContentPane().add(confirmPasswordField);
+        confirmPasswordField.setBounds(180, 100, 160, 30);
 
-        getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(40, 120, 290, 200);
+        playButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/playButton.png"))); // NOI18N
+        playButton.setToolTipText("");
+        playButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                playButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                playButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                playButtonMouseExited(evt);
+            }
+        });
+        getContentPane().add(playButton);
+        playButton.setBounds(50, 220, 130, 50);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/tutorialBackground.png"))); // NOI18N
+        backReigisterPageButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/backButton.png"))); // NOI18N
+        backReigisterPageButton.setText("jLabel2");
+        backReigisterPageButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backReigisterPageButtonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backReigisterPageButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backReigisterPageButtonMouseExited(evt);
+            }
+        });
+        getContentPane().add(backReigisterPageButton);
+        backReigisterPageButton.setBounds(220, 220, 120, 50);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/windowBackground3.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 360, 570);
+        jLabel1.setBounds(0, 0, 400, 300);
 
         pack();
     }// </editor-fold>                        
 
-    private void backButtonRankPageMouseEntered(java.awt.event.MouseEvent evt) {                                                
-        ImageIcon backIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/backButtonHover.png"));
-        backButtonRankPage.setIcon(backIcon);
-    }                                               
+    private void confirmPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {                                                     
+        // TODO add your handling code here:
+    }                                                    
 
-    private void backButtonRankPageMouseExited(java.awt.event.MouseEvent evt) {                                               
-        ImageIcon backIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/backButton.png"));
-        backButtonRankPage.setIcon(backIcon);
-    }                                              
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        // TODO add your handling code here:
+    }                                             
 
-    private void backButtonRankPageMouseClicked(java.awt.event.MouseEvent evt) {                                                
+    private void playButtonMouseEntered(java.awt.event.MouseEvent evt) {                                        
+        ImageIcon playIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/playButtonHover.png"));
+        playButton.setIcon(playIcon);
+    }                                       
+
+    private void playButtonMouseExited(java.awt.event.MouseEvent evt) {                                       
+        ImageIcon playIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/playButton.png"));
+        playButton.setIcon(playIcon);
+    }                                      
+
+    private void backReigisterPageButtonMouseEntered(java.awt.event.MouseEvent evt) {                                                     
+        ImageIcon backReigisterPageIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/backButtonHover.png"));
+        backReigisterPageButton.setIcon(backReigisterPageIcon);
+    }                                                    
+
+    private void backReigisterPageButtonMouseExited(java.awt.event.MouseEvent evt) {                                                    
+        ImageIcon backReigisterPageIcon = new ImageIcon(getClass().getResource("/nz/ac/aut/ense701/gui/image/backButton.png"));
+        backReigisterPageButton.setIcon(backReigisterPageIcon);
+    }                                                   
+
+    private void backReigisterPageButtonMouseClicked(java.awt.event.MouseEvent evt) {                                                     
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                TitlePage tp = new TitlePage(); 
+                tp.setLocationRelativeTo(null);
+                tp.setSize(400,510);
+                tp.setVisible(true);
+            }
+        });
         this.dispose();
-    }                                               
+    }                                                    
+
+    private void playButtonMouseClicked(java.awt.event.MouseEvent evt) {                                        
+        if(this.passwordField.getPassword() != null && 
+                this.confirmPasswordField.getPassword() != null &&
+                !this.userNameTextField.getText().equals("")){
+            if(!Arrays.equals(this.passwordField.getPassword(), this.confirmPasswordField.getPassword())){
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "Password have been input are not same!", "Wrong Password!",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }else if(User.hasUser(this.userNameTextField.getText())){
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "Username has been input existes", "Existed User!",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(
+                        this, 
+                        "Register successfully!", "Success!",
+                        JOptionPane.INFORMATION_MESSAGE);
+                LevelPage lvp = new LevelPage();
+                lvp.setVisible(true);
+                lvp.setSize(400,326);
+                lvp.setLocationRelativeTo(null);
+                lvp.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                User.addUser(this.userNameTextField.getText(), String.valueOf(this.passwordField.getPassword()));
+            }
+        }else{
+            JOptionPane.showMessageDialog(
+                this, 
+                "There must be no blank left above!", "Information Missing!",
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+    }                                       
 
     /**
      * @param args the command line arguments
@@ -146,28 +213,34 @@ public class RankPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RankPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RankPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RankPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RankPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegisterPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RankPage().setVisible(true);
+                new RegisterPage().setVisible(true);
             }
         });
     }
+
     // Variables declaration - do not modify                     
-    private javax.swing.JLabel backButtonRankPage;
+    private javax.swing.JLabel backReigisterPageButton;
+    private javax.swing.JPasswordField confirmPasswordField;
+    private javax.swing.JLabel confirmPasswordLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JLabel rankPageTitleLabel;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JLabel passwordLabel;
+    private javax.swing.JLabel playButton;
+    private javax.swing.JLabel userLabel;
+    private javax.swing.JFormattedTextField userNameTextField;
     // End of variables declaration                   
 }
