@@ -6,9 +6,14 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.Frame;
+import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import nz.ac.aut.ense701.gameModel.Game;
+import nz.ac.aut.ense701.gameModel.GameState;
+import nz.ac.aut.ense701.gameModel.MoveDirection;
 
 /**
  *
@@ -21,6 +26,40 @@ public class TitlePage extends javax.swing.JFrame {
      */
     public TitlePage() {
         initComponents();
+    }
+    
+    public void setupTimer(final Game game, final KiwiCountUI gui){
+        t = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                try {
+                    Timer timer = new Timer(true);
+                    game.getMyTimerTask().setLable(gui.getTimeLeftLable());
+                    timer.scheduleAtFixedRate(game.getMyTimerTask(), 0, 1000);
+                    while(game.getMyTimerTask().getTime() != 0){
+                        Thread.sleep(game.getMyTimerTask().getTime() * 1000);
+                    }
+                    if(game.getMyTimerTask().getTime() == 0 || !game.getState().equals(GameState.PLAYING)){
+                        timer.cancel();
+                    }
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(TitlePage.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        t.start();
+    }
+    
+    public void pause(){
+        try {
+            t.wait();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(TitlePage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void resume(){
+        t.notify();
     }
 
     /**
@@ -127,6 +166,7 @@ public class TitlePage extends javax.swing.JFrame {
     }                                      
 
     private void loginTitlePageButtonMouseClicked(java.awt.event.MouseEvent evt) {                                                  
+        this.dispose();
         LoginPage lg = new LoginPage();
                 lg.setVisible(true);
                 lg.setSize(400,326);
@@ -141,12 +181,13 @@ public class TitlePage extends javax.swing.JFrame {
                 ecp.setSize(400,300);
                 ecp.setLocationRelativeTo(null);
                 ecp.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        
+        this.dispose(); 
     }                                       
 
     private void playAsVisitorTitlePageButtonMouseClicked(java.awt.event.MouseEvent evt) {                                                          
-        String difficulty = "";
+        String difficulty = "Easy1";
         final Game game = new Game(difficulty);
+        //game.setupTimer();
         final KiwiCountUI  gui  = new KiwiCountUI(game);
         java.awt.EventQueue.invokeLater(new Runnable() 
         {
@@ -156,6 +197,7 @@ public class TitlePage extends javax.swing.JFrame {
                 gui.setVisible(true);
             }
         });
+        this.setupTimer(game, gui);
         this.setVisible(false);        
     }                                                         
 
@@ -198,6 +240,8 @@ public class TitlePage extends javax.swing.JFrame {
             }
         });
     }
+    
+    private Thread t;
 
     // Variables declaration - do not modify                     
     private javax.swing.JLabel exitButton;
